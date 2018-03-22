@@ -1,0 +1,24 @@
+{
+  "name": "jira-reporter",
+  "version": "1.0.0",
+  "description": "PSL jira reporter",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svillegasz/jira-reporter.git"
+  },
+  "keywords": [
+    "PSL",
+    "Jira",
+    "Reporter"
+  ],
+  "author": "Sebastian Villegas Zapata <svillegas@psl.com.co>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/svillegasz/jira-reporter/issues"
+  },
+  "homepage": "https://github.com/svillegasz/jira-reporter#readme"
+}
