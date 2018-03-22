@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/svillegasz/jira-reporter/issues"
   },
-  "homepage": "https://github.com/svillegasz/jira-reporter#readme"
+  "homepage": "https://github.com/svillegasz/jira-reporter#readme",
+  "dependencies": {
+    "request-promise": "^4.2.2"
+  }
 }
