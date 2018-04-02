@@ -1,5 +1,5 @@
 const request = require('request-promise');
-const { getIssues } = require('./issues');
+const { getIssues, isWorkingDay } = require('./utils');
 
 const USERNAME = process.env.JIRA_USERNAME;
 const PASSWORD = process.env.JIRA_PASSWORD;
@@ -8,15 +8,17 @@ const auth = {
     user: USERNAME,
     pass: PASSWORD,
 };
-const issues = getIssues();
 
-issues.forEach((json) => {
-    request
-    .post(URI, { auth, json })
-    .then((res) => {
-        console.log('Success!!!')
-    })
-    .catch((err) => {
-        console.error(`Error: ${err.error.message}`);
+if (isWorkingDay()) {
+    const issues = getIssues();
+    issues.forEach((json) => {
+        request
+            .post(URI, { auth, json })
+            .then((res) => {
+                console.log('Success!!!')
+            })
+            .catch((err) => {
+                console.error(`Error: ${err.error.message}`);
+            });
     });
-});
+}
