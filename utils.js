@@ -1,6 +1,7 @@
 const { getColombiaHolidaysByYear } = require('colombia-holidays');
+const moment = require('moment');
 
-const currentDate = new Date();
+const currentDate = moment().utcOffset(-5);
 const project = 'Mediabrands Modeling & Optimization - Mediabrands';
 
 const daily = {
@@ -8,7 +9,7 @@ const daily = {
     timeSpentJIRA: '15m',
     issue: 'PTSR-14',
     project,
-    startDate: currentDate.setHours(9, 30),
+    startDate: currentDate.set({ 'hour': 9, 'minute': 30 }).toISOString(),
     tfstask: ''
 }
 
@@ -17,7 +18,7 @@ const retro = {
     timeSpentJIRA: '1h',
     issue: 'PTSR-17',
     project,
-    startDate: currentDate.setHours(15, 0),
+    startDate: currentDate.set({ 'hour': 15, 'minute': 0 }).toISOString(),
     tfstask: ''
 }
 
@@ -26,7 +27,7 @@ const planning = {
     timeSpentJIRA: '1h',
     issue: 'PTSR-6',
     project,
-    startDate: currentDate.setHours(9, 30),
+    startDate: currentDate.set({ 'hour': 9, 'minute': 30 }).toISOString(),
     tfstask: ''
 }
 
@@ -35,7 +36,7 @@ const grooming = {
     timeSpentJIRA: '1h',
     issue: 'PTSR-3',
     project,
-    startDate: currentDate.setHours(14, 0),
+    startDate: currentDate.set({ 'hour': 14, 'minute': 0 }).toISOString(),
     tfstask: ''
 }
 
@@ -44,16 +45,21 @@ const testing = {
     timeSpentJIRA: '9h',
     issue: 'PTSR-5',
     project,
-    startDate: currentDate.setHours(8, 0),
+    startDate: currentDate.set({ 'hour': 8, 'minute': 0 }).toISOString(),
     tfstask: ''
 }
 
 const getIssues = () => {
     const issues = [];
-    switch (currentDate.getDay()) {
+    if (!isWorkingDay) return issues;
+    switch (currentDate.day()) {
         case 1:
-            issues.push(daily);
-            testing.timeSpentJIRA = '8.75h';
+            if (currentDate.week() % 2 === 0) {
+                issues.push(planning);
+            } else {
+                issues.push(daily);
+            }
+            testing.timeSpentJIRA = '8h';
             issues.push(testing);
             break;
         case 2:
@@ -73,8 +79,12 @@ const getIssues = () => {
             issues.push(testing);
             break;
         case 5:
-            issues.push(daily);
             testing.timeSpentJIRA = '8.75h';
+            if (currentDate.week() % 2 === 1) {
+                issues.push(retro);
+                testing.timeSpentJIRA = '7.75h';
+            }
+            issues.push(daily);
             issues.push(testing);
             break;
         default:
@@ -84,19 +94,12 @@ const getIssues = () => {
 };
 
 const isWorkingDay = () => {
-    if (currentDate.getDay() === 6) {
-        return false
-    }
-    if (currentDate.getDay() === 0) {
-        return false
-    }
     const isHoliday = getColombiaHolidaysByYear(currentDate.getFullYear())
         .map(holiday => holiday.holiday)
-        .includes(currentDate.toISOString().split('T')[0]);
-    return !isHoliday;
+        .includes(currentDate.format('YYYY-MM-DD'));
+    return !isHoliday && currentDate.day() !== 0 && currentDate.day() !== 6;
 }
 
 module.exports = {
-    getIssues,
-    isWorkingDay,
+    getIssues
 };
