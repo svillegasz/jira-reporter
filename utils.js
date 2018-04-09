@@ -56,10 +56,11 @@ const getIssues = () => {
         case 1:
             if (currentDate.week() % 2 === 0) {
                 issues.push(planning);
+                testing.timeSpentJIRA = '8h';
             } else {
                 issues.push(daily);
+                testing.timeSpentJIRA = '8.75h';
             }
-            testing.timeSpentJIRA = '8h';
             issues.push(testing);
             break;
         case 2:
