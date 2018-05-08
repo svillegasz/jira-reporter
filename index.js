@@ -17,6 +17,6 @@ issues.forEach((json) => {
             console.log('Success!!!')
         })
         .catch((err) => {
-            console.error(`Error: ${err.error.message}`);
+            console.error(err);
         });
 });
