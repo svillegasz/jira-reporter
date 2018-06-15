@@ -7,7 +7,7 @@ const project = 'Mediabrands Optimization - Mediabrands';
 const daily = {
     comment: 'Daily',
     timeSpentJIRA: '15m',
-    issue: 'PTSR-14',
+    issue: 'PTSR-23',
     project,
     startDate: currentDate.set({ 'hour': 9, 'minute': 30 }).toISOString(),
     tfstask: ''
@@ -16,7 +16,7 @@ const daily = {
 const retro = {
     comment: 'Retrospective',
     timeSpentJIRA: '1h',
-    issue: 'PTSR-17',
+    issue: 'PTSR-23',
     project,
     startDate: currentDate.set({ 'hour': 15, 'minute': 0 }).toISOString(),
     tfstask: ''
@@ -25,7 +25,7 @@ const retro = {
 const planning = {
     comment: 'Planning',
     timeSpentJIRA: '1h',
-    issue: 'PTSR-6',
+    issue: 'PTSR-23',
     project,
     startDate: currentDate.set({ 'hour': 9, 'minute': 30 }).toISOString(),
     tfstask: ''
