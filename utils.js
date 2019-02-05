@@ -3,12 +3,14 @@ const moment = require('moment');
 
 const currentDate = moment().utcOffset(-5);
 const project = 'Mediabrands Optimization - Mediabrands';
+const place = 'Sede PSL'
 
 const daily = {
     comment: 'Daily',
     timeSpentJIRA: '15m',
     issue: 'PTSR-23',
     project,
+    place,
     startDate: currentDate.set({ 'hour': 9, 'minute': 30 }).toISOString(),
     tfstask: ''
 }
@@ -18,6 +20,7 @@ const retro = {
     timeSpentJIRA: '1h',
     issue: 'PTSR-23',
     project,
+    place,
     startDate: currentDate.set({ 'hour': 15, 'minute': 0 }).toISOString(),
     tfstask: ''
 }
@@ -27,6 +30,7 @@ const planning = {
     timeSpentJIRA: '1h',
     issue: 'PTSR-23',
     project,
+    place,
     startDate: currentDate.set({ 'hour': 9, 'minute': 30 }).toISOString(),
     tfstask: ''
 }
@@ -36,6 +40,7 @@ const grooming = {
     timeSpentJIRA: '1h',
     issue: 'PTSR-3',
     project,
+    place,
     startDate: currentDate.set({ 'hour': 14, 'minute': 0 }).toISOString(),
     tfstask: ''
 }
@@ -45,6 +50,7 @@ const testing = {
     timeSpentJIRA: '9h',
     issue: 'PTSR-5',
     project,
+    place,
     startDate: currentDate.set({ 'hour': 8, 'minute': 0 }).toISOString(),
     tfstask: ''
 }
