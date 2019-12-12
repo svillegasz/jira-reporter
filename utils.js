@@ -2,7 +2,7 @@ const { getColombiaHolidaysByYear } = require('colombia-holidays');
 const moment = require('moment');
 
 const currentDate = moment().utcOffset(-5);
-const project = 'Mediabrands Optimization - Mediabrands';
+const project = 'Kinesso Optimization - Kinesso';
 const place = 'Sede PSL'
 
 const daily = {
