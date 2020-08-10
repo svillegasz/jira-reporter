@@ -101,12 +101,13 @@ const getIssues = () => {
 };
 
 const isWorkingDay = () => {
-    const isHoliday = getColombiaHolidaysByYear(currentDate.getFullYear())
+    const isHoliday = getColombiaHolidaysByYear(currentDate.year())
         .map(holiday => holiday.holiday)
         .includes(currentDate.format('YYYY-MM-DD'));
     return !isHoliday && currentDate.day() !== 0 && currentDate.day() !== 6;
 }
 
 module.exports = {
-    getIssues
+    getIssues,
+    isWorkingDay
 };

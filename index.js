@@ -9,14 +9,16 @@ const auth = {
     pass: PASSWORD,
 };
 
-const issues = getIssues();
-issues.forEach((json) => {
-    request
-        .post(URI, { auth, json })
-        .then((res) => {
-            console.log('Success!!!')
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-});
+if (isWorkingDay()) {
+    const issues = getIssues();
+    issues.forEach((json) => {
+        request
+            .post(URI, { auth, json })
+            .then((res) => {
+                console.log('Success!!!')
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    });
+}
