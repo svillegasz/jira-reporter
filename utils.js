@@ -2,96 +2,113 @@ const { getColombiaHolidaysByYear } = require('colombia-holidays');
 const moment = require('moment');
 
 const currentDate = moment().utcOffset(-5);
-const project = 'Kinesso Optimization - Kinesso';
-const place = 'Sede PSL'
 
-const daily = {
-    comment: 'Daily',
-    timeSpentJIRA: '15m',
-    issue: 'PTSR-23',
-    project,
-    place,
-    startDate: currentDate.set({ 'hour': 9, 'minute': 30 }).toISOString(),
+const issue = {
+    comment: '',
+    timeSpentJIRA: null,
+    issue: '',
+    project: 'BrightInsight Platform - BrightInsight',
+    place: 'Sede PSL',
+    startDate: null,
     tfstask: ''
 }
 
-const retro = {
-    comment: 'Retrospective',
+const daily = Object.assign({}, issue, {
+    issue: 'PTSR-23',
+    timeSpentJIRA: '30m',
+})
+
+const qa_offshore_daily = Object.assign({}, daily, {
+    comment: 'Daily with the qe offshore team',
+    startDate: currentDate.set({ 'hour': 7, 'minute': 30 }).toISOString(),
+})
+
+const psl_daily = Object.assign({}, daily, {
+    comment: 'Daily with the PSL team',
+    startDate: currentDate.set({ 'hour': 10, 'minute': 30 }).toISOString(),
+})
+
+const qa_daily = Object.assign({}, daily, {
+    comment: 'Daily with the QE team',
+    startDate: currentDate.set({ 'hour': 16, 'minute': 15 }).toISOString(),
+})
+
+const configuration_daily = Object.assign({}, daily, {
+    comment: 'Daily with the configuration service team',
+    startDate: currentDate.set({ 'hour': 13, 'minute': 00 }).toISOString(),
+})
+
+const retro = Object.assign({}, issue, {
+    comment: 'Retrospective inside PSL',
     timeSpentJIRA: '1h',
     issue: 'PTSR-23',
-    project,
-    place,
     startDate: currentDate.set({ 'hour': 15, 'minute': 0 }).toISOString(),
-    tfstask: ''
-}
+})
 
-const planning = {
-    comment: 'Planning',
+const planning = Object.assign({}, issue, {
+    comment: 'Planning and demo for platform',
     timeSpentJIRA: '1h',
     issue: 'PTSR-23',
-    project,
-    place,
-    startDate: currentDate.set({ 'hour': 9, 'minute': 30 }).toISOString(),
-    tfstask: ''
-}
+    startDate: currentDate.set({ 'hour': 12, 'minute': 30 }).toISOString(),
+})
 
-const grooming = {
-    comment: 'Grooming',
+const grooming = Object.assign({}, issue, {
+    comment: 'Grooming for configuration service',
     timeSpentJIRA: '1h',
     issue: 'PTSR-3',
-    project,
-    place,
-    startDate: currentDate.set({ 'hour': 14, 'minute': 0 }).toISOString(),
-    tfstask: ''
-}
+    startDate: currentDate.set({ 'hour': 11, 'minute': 0 }).toISOString(),
+})
 
-const testing = {
-    comment: 'Test automation',
+const testing = Object.assign({}, issue, {
+    comment: 'Automation for component and contract testing',
     timeSpentJIRA: '9h',
     issue: 'PTSR-5',
-    project,
-    place,
     startDate: currentDate.set({ 'hour': 8, 'minute': 0 }).toISOString(),
-    tfstask: ''
-}
+})
 
 const getIssues = () => {
     const issues = [];
     if (!isWorkingDay) return issues;
     switch (currentDate.day()) {
         case 1:
-            if (currentDate.week() % 2 === 0) {
-                issues.push(planning);
-                testing.timeSpentJIRA = '8h';
-            } else {
-                issues.push(daily);
-                testing.timeSpentJIRA = '8.75h';
-            }
+            issues.push(qa_offshore_daily);
+            issues.push(psl_daily);
+            issues.push(qa_daily);
+            issues.push(configuration_daily);
+            testing.timeSpentJIRA = '7h';
             issues.push(testing);
             break;
         case 2:
-            issues.push(daily);
-            testing.timeSpentJIRA = '8.75h';
+            issues.push(psl_daily);
+            issues.push(configuration_daily);
+            testing.timeSpentJIRA = '8h';
             issues.push(testing);
             break;
         case 3:
-            issues.push(daily);
-            issues.push(grooming);
-            testing.timeSpentJIRA = '7.75h';
+            if (currentDate.week() % 2 === 0) {
+                issues.push(planning);
+                issues.push(retro);
+                testing.timeSpentJIRA = '5.5h';
+            } else {
+                testing.timeSpentJIRA = '7.5h';
+            }
+            issues.push(qa_offshore_daily);
+            issues.push(psl_daily);
+            issues.push(qa_daily);
             issues.push(testing);
             break;
         case 4:
-            issues.push(daily);
-            testing.timeSpentJIRA = '8.75h';
+            issues.push(qa_offshore_daily);
+            issues.push(psl_daily);
+            issues.push(configuration_daily);
+            testing.timeSpentJIRA = '7.5h';
             issues.push(testing);
             break;
         case 5:
-            testing.timeSpentJIRA = '8.75h';
-            if (currentDate.week() % 2 === 1) {
-                issues.push(retro);
-                testing.timeSpentJIRA = '7.75h';
-            }
-            issues.push(daily);
+            issues.push(qa_daily);
+            issues.push(psl_daily);
+            issues.push(grooming);
+            testing.timeSpentJIRA = '7h';
             issues.push(testing);
             break;
         default:
