@@ -20,36 +20,36 @@ const daily = Object.assign({}, issue, {
 
 const qa_offshore_daily = Object.assign({}, daily, {
     comment: 'Daily with the qe offshore team',
-    startDate: currentDate.set({ 'hour': 7, 'minute': 30 }).toISOString(),
+    startDate: currentDate.set({ 'hour': 9, 'minute': 30 }).toISOString(),
 })
 
 const psl_daily = Object.assign({}, daily, {
-    comment: 'Daily with the PSL team',
-    startDate: currentDate.set({ 'hour': 10, 'minute': 30 }).toISOString(),
+    comment: 'Daily with the perficient team',
+    startDate: currentDate.set({ 'hour': 10, 'minute': 00 }).toISOString(),
 })
 
 const qa_daily = Object.assign({}, daily, {
     comment: 'Daily with the QE team',
-    startDate: currentDate.set({ 'hour': 16, 'minute': 15 }).toISOString(),
+    startDate: currentDate.set({ 'hour': 15, 'minute': 15 }).toISOString(),
 })
 
-const configuration_daily = Object.assign({}, daily, {
-    comment: 'Daily with the configuration service team',
+const service_daily = Object.assign({}, daily, {
+    comment: 'Daily with the rules engine service team',
     startDate: currentDate.set({ 'hour': 13, 'minute': 00 }).toISOString(),
 })
 
 const retro = Object.assign({}, issue, {
-    comment: 'Retrospective inside PSL',
+    comment: 'Retrospective inside perficient',
     timeSpentJIRA: '1h',
     issue: 'PTSR-23',
     startDate: currentDate.set({ 'hour': 15, 'minute': 0 }).toISOString(),
 })
 
 const planning = Object.assign({}, issue, {
-    comment: 'Planning and demo for platform',
-    timeSpentJIRA: '1h',
+    comment: 'Planning for rules engine',
+    timeSpentJIRA: '30m',
     issue: 'PTSR-23',
-    startDate: currentDate.set({ 'hour': 12, 'minute': 30 }).toISOString(),
+    startDate: currentDate.set({ 'hour': 13, 'minute': 00 }).toISOString(),
 })
 
 const grooming = Object.assign({}, issue, {
@@ -60,7 +60,7 @@ const grooming = Object.assign({}, issue, {
 })
 
 const testing = Object.assign({}, issue, {
-    comment: 'Automation for component and contract testing',
+    comment: 'Test Automation: component and contract testing',
     timeSpentJIRA: '9h',
     issue: 'PTSR-5',
     startDate: currentDate.set({ 'hour': 8, 'minute': 0 }).toISOString(),
@@ -74,13 +74,13 @@ const getIssues = () => {
             issues.push(qa_offshore_daily);
             issues.push(psl_daily);
             issues.push(qa_daily);
-            issues.push(configuration_daily);
+            issues.push(service_daily);
             testing.timeSpentJIRA = '7h';
             issues.push(testing);
             break;
         case 2:
             issues.push(psl_daily);
-            issues.push(configuration_daily);
+            issues.push(service_daily);
             testing.timeSpentJIRA = '8h';
             issues.push(testing);
             break;
@@ -88,7 +88,7 @@ const getIssues = () => {
             if (currentDate.week() % 2 === 0) {
                 issues.push(planning);
                 issues.push(retro);
-                testing.timeSpentJIRA = '5.5h';
+                testing.timeSpentJIRA = '6h';
             } else {
                 testing.timeSpentJIRA = '7.5h';
             }
@@ -100,15 +100,14 @@ const getIssues = () => {
         case 4:
             issues.push(qa_offshore_daily);
             issues.push(psl_daily);
-            issues.push(configuration_daily);
+            issues.push(service_daily);
             testing.timeSpentJIRA = '7.5h';
             issues.push(testing);
             break;
         case 5:
             issues.push(qa_daily);
             issues.push(psl_daily);
-            issues.push(grooming);
-            testing.timeSpentJIRA = '7h';
+            testing.timeSpentJIRA = '8h';
             issues.push(testing);
             break;
         default:
