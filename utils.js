@@ -1,7 +1,26 @@
 const { getColombiaHolidaysByYear } = require('colombia-holidays');
 const moment = require('moment');
+const request = require('request-promise');
+
+const PROJECT_JIRA_URI = process.env.PROJECT_JIRA_URI;
+const PROJECT_JIRA_USERNAME = process.env.PROJECT_JIRA_USERNAME;
+const PROJECT_JIRA_TOKEN = process.env.PROJECT_JIRA_TOKEN;
+const auth = {
+    user: PROJECT_JIRA_USERNAME,
+    pass: PROJECT_JIRA_TOKEN,
+};
 
 const currentDate = moment().utcOffset(-5);
+
+const getSummary = async () => {
+    try {
+        const response = await request.get(PROJECT_JIRA_URI + '/rest/api/3/search?jql=status %3D "In Progress" AND assignee %3D currentUser()', { auth });
+        return JSON.parse(response).issues[0].fields.summary;
+    } catch (error) {
+        console.log(error);
+        return "Test Automation: component and contract tests"
+    }
+};
 
 const issue = {
     comment: '',
@@ -59,15 +78,16 @@ const grooming = Object.assign({}, issue, {
     startDate: currentDate.set({ 'hour': 11, 'minute': 0 }).toISOString(),
 })
 
-const testing = Object.assign({}, issue, {
-    comment: 'Test Automation: component and contract testing',
+const getTesting = async () => Object.assign({}, issue, {
+    comment: await getSummary(),
     timeSpentJIRA: '9h',
     issue: 'PTSR-5',
     startDate: currentDate.set({ 'hour': 8, 'minute': 0 }).toISOString(),
 })
 
-const getIssues = () => {
+const getIssues = async () => {
     const issues = [];
+    const testing = await getTesting()
     if (!isWorkingDay) return issues;
     switch (currentDate.day()) {
         case 1:

@@ -9,16 +9,18 @@ const auth = {
     pass: PASSWORD,
 };
 
-if (isWorkingDay()) {
-    const issues = getIssues();
-    issues.forEach((json) => {
-        request
-            .post(URI, { auth, json })
-            .then((res) => {
-                console.log('Success!!!')
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    });
+const reportJira = async () => {
+    if (isWorkingDay()) {
+        const issues = await getIssues();
+        issues.forEach(async (json) => {
+            try {
+                await request.post(URI, { auth, json });
+                console.log('Success!!!');
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    }
 }
+
+reportJira();
